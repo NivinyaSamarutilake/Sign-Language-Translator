@@ -22,5 +22,15 @@ A CNN model will be used for this project. Therefore, feature extraction is impl
 To evaluate, 30% of the above data will be taken as the test set. 
 
 ## Proposed Timeline
+![image](https://user-images.githubusercontent.com/91209506/191014363-42e6d0c4-4375-4482-838e-c2f2e865d767.png)
 
-![image](https://user-images.githubusercontent.com/91209506/190921145-8eedefb2-942a-4195-b7a5-5734f69094fc.png)
+## References
+
+[1] 	[Aryanie, D., & Heryadi, Y. (2015). American Sign Language-Based Finger-spelling Recognition using k-Nearest Neighbours Classifier. The 3rd International Conference on Information and Communication Technology. Bali.](https://www.researchgate.net/publication/279198249_American_Sign_Language-Based_Finger-spelling_Recognition_using_k-Nearest_Neighbours_Classifier)
+
+[2] 	[Ojha, A., Pandey, A., & Maurya, S. (2020). Sign Language to Text and Speech Translation in Real Time using Convolutional Neural Network. International Journal of Engineering Research & Technology (IJERT).](https://www.ijert.org/research/sign-language-to-text-and-speech-translation-in-real-time-using-convolutional-neural-network-IJERTCONV8IS15042.pdf)
+
+[3] 	[Tanseem N. Abu-Jamie, P. S.-N. (2022). Classification of Sign-Language Using Deep Learning by ResNet. International Journal of Academic Information Systems Research (IJAISR), 25-34.](https://philarchive.org/archive/ABUCOS-5)
+
+[4] 	[Taskiran, M., Killioglu, M., & Kahraman, N. (2018). A Real-Time System For Recognition Of AmericanSign Language By Using Deep Learning. 41st International Conference on Telecommunications and Signal Processing. Athens.](https://www.researchgate.net/publication/326270945_A_Real-Time_System_For_Recognition_of_American_Sign_Language_by_Using_Deep_Learning)
+
