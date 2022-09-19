@@ -9,7 +9,7 @@ The sign language translator app is a solution to the above problem scenario. It
 ![image](https://user-images.githubusercontent.com/91209506/191010582-1e95f265-823b-4ea8-b15f-2acb8285a44e.png)
 
 
-## Development
+## Development Plan
 
 The [dataset]( https://www.kaggle.com/datasets/grassknoted/asl-alphabet) that was selected for this project has 87,000 images. The training set contains images for all letters of ASL alphabet and for space character. This dataset is quite commonly used in many of the previous research works. 
 
@@ -17,11 +17,33 @@ For the development of the app Android studio will be used and to run inference,
 
 A CNN model will be used for this project. Therefore, feature extraction is implemented here.
 
-## Evaluation of the model  
+### Evaluation of the model  
 
 To evaluate, 30% of the above data will be taken as the test set. 
 
+## Analysis of Previous Works
+
+There are several works that have been done to address this issue. They have followed various machine learning techniques and here is the analysis on some of them.
+
+1.  Convolutional Neural Networks (CNN) -
+      * Most widely used technique in many of the previous works [2], [3], [4]
+      * Very high accuracy - most have more than 95%
+      * Suitable for systems with large datasets
+      * Simple and has low computing times
+2.  k-NN classifier - 
+      * Less accuracy than CNN
+      * Can be further developed to have more accuracy, but it will increase computation latency and complexity [1]
+      * Not suitable for large datasets
+3.  Support Vector Machines (SVM) -
+      * Less accuracy compared to other models
+      * Can be used in combination with other classifiers
+  
+Some of these works have combined 2 or more types of techniques to create an efficient model. 
+
 ## Proposed Timeline
+
+Given below is a rough time plan for the project. Please note that it can be subject to change. 
+
 ![image](https://user-images.githubusercontent.com/91209506/191014363-42e6d0c4-4375-4482-838e-c2f2e865d767.png)
 
 ## References
