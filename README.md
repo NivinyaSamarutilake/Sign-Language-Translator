@@ -6,6 +6,20 @@ Communication between a speech impaired person and a normal person can be diffic
 
 The sign language translator app is a solution to the above problem scenario. It is a real-time translator app that uses an image-classification model to differentiate and identify the various hand signs. The images will be captured by the smartphone, and they will be fed into a trained model which will output the corresponding letter as text. This app will translate the ASL alphabet into English. 
 
+![image](https://user-images.githubusercontent.com/91209506/191010582-1e95f265-823b-4ea8-b15f-2acb8285a44e.png)
+
+
+## Development
+
+The dataset that was selected for this project has 87,000 images. The training set contains images for all letters of ASL alphabet and for space character. This dataset is quite commonly used in many of the previous research works. 
+
+For the development of the app Android studio will be used and to run inference, Tensorflow Lite will be used. Tensorflow Lite has been optimized for on-device ML by addressing key constraints such as latency, connectivity (no need of internet connection), privacy of data, size of the model and power consumption. This will enable the data to be processed locally instead of being sent to a remote server, which will reduce latency as a result.
+
+A CNN model will be used for this project. Therefore, feature extraction is implemented here.
+
+## Evaluation of the model  
+
+To evaluate, 30% of the above data will be taken as the test set. 
 
 ## Proposed Timeline
 
