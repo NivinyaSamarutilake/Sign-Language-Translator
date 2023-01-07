@@ -56,3 +56,45 @@ Given below is a rough time plan for the project. Please note that it can be sub
 
 [4] 	[Taskiran, M., Killioglu, M., & Kahraman, N. (2018). A Real-Time System For Recognition Of AmericanSign Language By Using Deep Learning. 41st International Conference on Telecommunications and Signal Processing. Athens.](https://www.researchgate.net/publication/326270945_A_Real-Time_System_For_Recognition_of_American_Sign_Language_by_Using_Deep_Learning)
 
+## Implementation
+
+The implementation of this project is mainly done in 2 parts. 
+1. Development of the CNN model
+2. Android app development
+
+### Development of the CNN model
+
+Here, it was decided to use a basic image classification CNN.
+
+#### Dataset
+
+The dataset chosen for this project contains images for the 26 letters of the ASL alphabet, for the 'space', 'delete' signs, and images with no hand sign / hands shouwn in them to represent 'nothing'. Thus there are 29 classes in total and for each class there are 3000 images. The image given below shows the ASL alphabet hand signs.
+
+![image](https://user-images.githubusercontent.com/91209506/211129744-13ccd1e5-dfdf-4ec9-9a08-57b3529c7f71.png=400x400)
+
+A few of the main reasons why this particular dataset was chosen are,
+* The number of images available for each class - For a machine learning / deep learning model, having a large number of data will ensure a better trained model with higher accuracy. This dataset offered a lot of data.
+* For each class, there are images taken in different angles and with different lighting. Therefore, once trained, this model should be able to recognize hand signs done in different conditions with considereable accuracy. 
+
+As the first step, the dataset needed to be split into train, validation and test sets. 
+
+Since this is a large dataset, a good proportion could be allocated for testing and validating purposes. Therefore it was decided to split the datset in the raio of 70 : 20 : 10 for train : validation : test. The exact numbers of the train, validation and test sets are given below.
+
+| Set               | Total number of images  | Images per each class |
+|-------------------|-------------------------|-----------------------|
+|  Train            | 60900                   |  2100                 |
+|  Validation       | 17400                   |  600                  |
+|  Test             | 8700                    |  300                  |
+
+The sklearn library offers a function to easily split a dataset according to the desired ratios, called [train_test_split](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html) and this function was used here. 
+
+```Python
+
+X_train, X_test, y_train, y_test = train_test_split(X_train, y_train, test_size = 0.1, random_state = 12345)
+X_train, X_validate, y_train, y_validate = train_test_split(X_train, y_train, test_size = 0.22222, random_state = 12345)
+
+```
+
+
+
+
