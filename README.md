@@ -163,7 +163,42 @@ My choice of platform to develop the sign language recognition app was Android S
 
 #### UI of the Sign Language Translator App
 
+The UI of the app was designed to be easy to use. The blacked area of the interface is a PreviewView where it will display the preview of the footage we are recording. To record the video the camera access permission has to be granted first. Camera access only has to be given once when the app is starting up for the first time. With the next times of use, there is no need to give permission over again. 
+The user only has to press the 'CAPTURE' button and hold the mobile and record the footage of the signer to get the images of the hand signs. The translation will appear in the designated area for the translation just below the camera surface. Once the user is done with the translation, he or she can press the 'STOP' button and the camera will stop recording. 
 
+<img src="https://user-images.githubusercontent.com/91209506/211134073-1ddc3287-d6fb-421e-8ad0-db3db348f7ae.png" width="300" height="500" column_gap="40px"/>     <img src="https://user-images.githubusercontent.com/91209506/211134088-9439d37c-739a-421d-9c74-05c5c6172cc8.png" width="300" height="500"/>
+
+#### Integrating the CNN model
+
+The integration of the CNN model was easier to do with the Android Studio dependency for tensorflow lite. Then the .tflite model was imported as 'SignLangauageRecognitionModel.tflite' to the app codebase and placed in a new resource directory. A decision had to be made on how to input the images from the camera feed to the CNN model. There were 2 methods that I was able to come up with.
+1. Set a timer at the moment the camera starts recording, and automatically take a photo at a certain trigger- for example, take an image every 1 second and input it to the model for processing
+2. Extract frames from the live footage and input each of them to the model to run inference.
+
+A major assumption that was made here was the signer's speed of doing the hand signs. It was assumed that the signer, at maximum, would be able to do about 1 handsign per second. This assumption is necessary in both methods to set a certain time interval between the translations, and I had to count for the delay that will be there for the processing of images.
+
+Upon further research, I was able to find that the setting a trigger / alarm to take images and then inputting them to the model can be a tedious task compared to the 2nd method given above. The first method requires to save the images to a media storage as well and it can cause unnecessary delay and will take up storage.  With these findings, I was able to reject the first method completely and focus more on the 2nd method of extracting frames.
+
+As mentioned above, Android Studio has a lot of fast updates and thus the API and documentations are constantly changing. The latest version of Camera API is [CameraX](https://developer.android.com/training/camerax), and it has a use case called 'Image Analysis' which can be used to extract frames and feed them into a machine learning model. This is a high performance analyzer with low latency, and it can extract frames up to 60fps according to the documentation. As this implementation aligned well with the real-time translation requirements of this project, I set up the Image Analysis use case for this project, and configured the image analyzer to send the frames from the live footage, process the frame, and input to the Sign Language Recognition model. 
+
+A frame from the footage is defined by the 'ImageProxy' class, and once an ImageProxy object is taken, it is sent to the 'analyze()' method where the preprocessing of the input object happens. The analyzer is built using the image format as 'RGBA_8888' which is supported by CameraX, and the size of the frame is set to 200 x 200 similar to the training dataset used in the model.
+First, the frame converted into a Bitmap image with a custom 'toBitmap()' method. Then the Bitmap is scaled down to 32 x 32 size as required by the model. Then it is converted to a Tensor Image which is then converted to ByteBuffer to perform the normalization (TODO). This ByteBuffer object is then loaded into a TensorBuffer of shape {1, 32, 32, 3} and this is the input to our Sign Language Recognition model. It will then generate the outputstream TensorBuffer. From this array, we should select the closest classification with the highest confidence percentage, and then output that class label as the classification.
+
+#### Methodology 
+With this method, the processing frame rate was calculated as nearly 30 fps. I have enabled a blocking mode for the analysis, thus, the other operations are blocked while a frame is being processed. Even with that, the app has acheived a high frame rate.
+
+With the current implementation, there will be a lot of outputs just within the span of one second. This does not serve the purpose of the app as it is necessary to give a translation rate where the user can keep up with. Therefore, I decided to collect all the outputs of each set of 30 frames, and then find out the maximum prediction of them, and output it as the translation. This will give a translation approximately every 1 second. 
+
+I am still on the process of figuring out if there is a better method to get the accurate translation.
+
+#### Testing
+
+Testing of the app is carried out through the emulator, both with virtual devices and the physical mobile device I am using. For the physical device I enabled developer options and executed the app through USB debugging. 
+
+### Current Status of the project
+
+So far the accuracy of the test results have been very low. I have identified some problem areas with the input frames, and plan on working on them. 
+* Normalization of the inputstream values haven't been done
+* The output keeps fluctuating between the same classes - A, C, O, Y 
 
 
 
