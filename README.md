@@ -104,7 +104,7 @@ The size of an image in this dataset is 200 x 200 pixels, and they are all in RG
 Each pixel in an image has 3 values for R, G and B each. This can be visualized as follows.
 
 <p  align="center">
-<img src="https://user-images.githubusercontent.com/91209506/211130586-78895f6e-ba67-44c0-a01d-e9e40cfa7207.png" width="400" height="400">
+     <img src="https://user-images.githubusercontent.com/91209506/211130586-78895f6e-ba67-44c0-a01d-e9e40cfa7207.png" width="200" height="200">
 </p>
 
 These RGB values can be read through the 'im_read()' function the in cv2 library. It returns a 3D numpy array with the shape (200, 200, 3) - representing the RGB values for each pixel along the height and width of the image. Once the array is flattened, for each image there are 200 x 200 x 3 = *12000* values in the range 0 - 255. 
@@ -112,7 +112,7 @@ These RGB values can be read through the 'im_read()' function the in cv2 library
 For the training, values for all 60900 images, along with the image label (with the label, there would be 12001 values for each image) needed to be taken and reshaped into 1 large 2D matrix, with each row representing the 12001 values for the images, first column representing the labels, and the other columns representing the pixel values in the order R, G, B. The format of the matrix is shown below. 
 
 <p  align="center">
-<img src="https://user-images.githubusercontent.com/91209506/211131047-cb0ae622-ee10-431a-87aa-7bad8ee5e779.png" width="400" height="300">
+     <img src="https://user-images.githubusercontent.com/91209506/211131047-cb0ae622-ee10-431a-87aa-7bad8ee5e779.png" width="300" height="200">
 </p>
 
 A problem was raised here, due to the large number of values. 
@@ -122,13 +122,42 @@ Google Colab has allocated 12 GB RAM and when the code was executed for this int
 After performing this augmentation, the visualized data looked as follows:
 
 <p  align="center">
-<img src="https://user-images.githubusercontent.com/91209506/211131779-e03e3047-bbe3-4823-b58c-b70ab0af66a4.png" width="300" height="300">
+     <img src="https://user-images.githubusercontent.com/91209506/211131779-e03e3047-bbe3-4823-b58c-b70ab0af66a4.png" width="300" height="300">
 </p>
 
 After obtaining the 2D training data matrix, the values were normalized by dividing it by 255. Now the dataset is preprocessed for training.
 
 #### Training the CNN model
 
+The 'Sequential' class Keras library was used to develop the CNN model. 3 layers were added with the ReLU activation function. Finally the model was compiled using the Adam optimizer. The summary of the CNN model is given below.
+
+<p align="center">
+     <img src="https://user-images.githubusercontent.com/91209506/211132341-708f8b2b-5191-4a19-afdb-382a7f5f9c93.png" width="400" height="500">
+</p>
+
+The dataset was then trained for 15 epochs and it managed to acheive high accuracy on the validation dataset. Then the test dataset was input to this CNN model and testing was carried out to see how much accuracy can be achieved with this model. The results are as follows.
+* Training accuracy - 96.13%
+* Validation accuracy - 99.46%
+* Testing accuracy - 99.43%
+
+The graph below visualizes the validation accuracy and validation loss of the model.
+![image](https://user-images.githubusercontent.com/91209506/211132696-45ace1c9-8ba8-47fa-88a0-6814530e67c7.png)
+
+#### Obtaining the .tflite model
+
+Since the base CNN model acheived such high accuracy, it was decided to use the model as it is and integrate it to the android app. To perform this task, it was decided to use Tensorflow lite, as it is a deep learning framework that has been optimized for deploying machine learning models on mobile devices, microcontrollers and other such edge devices. Tensorflow lite can convert an already trained ML model to much more lightweight version in the .tflite format and this model can be embedded to the mobile app easily as it has been optimized for speed and storage considering that it is a key requirement in this project. The following few lines were just enough to perform this conversion.
+
+```python
+
+keras.models.save_model(cnn_model, 'model.pbtxt')
+converter = tensorflow.lite.TFLiteConverter.from_keras_model(model=cnn_model)
+model_tflite = converter.convert()
+open('signLanguageRecognitionModel.tflite', 'wb').write(model_tflite)
+
+```
+Now this tflite model should be integrated with the android app to perform further testing and get accurate translations of the hand signs.
+
+### App development
 
 
 
