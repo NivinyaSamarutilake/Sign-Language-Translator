@@ -64,7 +64,7 @@ The implementation of this project is mainly done in 2 parts.
 
 ### Development of the CNN model
 
-Here, it was decided to use a basic image classification CNN.
+Here, it was decided to use a basic image classification CNN. I used Google Colab as the platform for training the CNN model.
 
 #### Dataset
 
@@ -74,11 +74,13 @@ The dataset chosen for this project contains images for the 26 letters of the AS
 
 A few of the main reasons why this particular dataset was chosen are,
 * The number of images available for each class - For a machine learning / deep learning model, having a large number of data will ensure a better trained model with higher accuracy. This dataset offered a lot of data.
-* For each class, there are images taken in different angles and with different lighting. Therefore, once trained, this model should be able to recognize hand signs done in different conditions with considereable accuracy. 
+* For each class, there are images taken in different angles and with different lighting. Therefore, once trained, this model should be able to recognize hand signs done in different conditions with considereable accuracy, which is a key requirement in this project. 
+
+Thie dataset was uploaded to MyDrive, so that it can be easily accessed in Google Colab.
 
 As the first step, the dataset needed to be split into train, validation and test sets. 
 
-Since this is a large dataset, a good proportion could be allocated for testing and validating purposes. Therefore it was decided to split the datset in the raio of 70 : 20 : 10 for train : validation : test. The exact numbers of the train, validation and test sets are given below.
+Since this is a large dataset, a good proportion could be allocated for testing and validating purposes. Therefore it was decided to split the datset in the raio of *70 : 20 : 10* for *train : validation : test*. The exact numbers of the train, validation and test sets are given below.
 
 | Set               | Total number of images  | Images per each class |
 |-------------------|-------------------------|-----------------------|
@@ -94,6 +96,42 @@ X_train, X_test, y_train, y_test = train_test_split(X_train, y_train, test_size 
 X_train, X_validate, y_train, y_validate = train_test_split(X_train, y_train, test_size = 0.22222, random_state = 12345)
 
 ```
+
+#### Preprocessing Data
+
+The size of an image in this dataset is 200 x 200 pixels, and they are all in RGB format (jpg files). They cannot be processed in that format and had to be converted into a vector of some format - a numpy array or a pandas dataframe. 
+
+Each pixel in an image has 3 values for R, G and B each. This can be visualized as follows.
+
+<p  align="center">
+<img src="https://user-images.githubusercontent.com/91209506/211130586-78895f6e-ba67-44c0-a01d-e9e40cfa7207.png" width="400" height="400">
+</p>
+
+These RGB values can be read through the 'im_read()' function the in cv2 library. It returns a 3D numpy array with the shape (200, 200, 3) - representing the RGB values for each pixel along the height and width of the image. Once the array is flattened, for each image there are 200 x 200 x 3 = *12000* values in the range 0 - 255. 
+
+For the training, values for all 60900 images, along with the image label (with the label, there would be 12001 values for each image) needed to be taken and reshaped into 1 large 2D matrix, with each row representing the 12001 values for the images, first column representing the labels, and the other columns representing the pixel values in the order R, G, B. The format of the matrix is shown below. 
+
+<p  align="center">
+<img src="https://user-images.githubusercontent.com/91209506/211131047-cb0ae622-ee10-431a-87aa-7bad8ee5e779.png" width="400" height="300">
+</p>
+
+A problem was raised here, due to the large number of values. 
+
+Google Colab has allocated 12 GB RAM and when the code was executed for this intensive task, it created a RAM overflow and the program crashed. As a solution, to reduce the program load, it was decided to resize the images to a much smaller size. Therefore, I resized the images to 32 x 32, making it 32 x 32 x 3 = 3072 values per image, and reducing the load by nearly 75%. The cv2 library also offered a 'resize' function for this purpose.
+
+After performing this augmentation, the visualized data looked as follows:
+
+<p  align="center">
+<img src="https://user-images.githubusercontent.com/91209506/211131779-e03e3047-bbe3-4823-b58c-b70ab0af66a4.png" width="300" height="300">
+</p>
+
+After obtaining the 2D training data matrix, the values were normalized by dividing it by 255. Now the dataset is preprocessed for training.
+
+#### Training the CNN model
+
+
+
+
 
 
 
