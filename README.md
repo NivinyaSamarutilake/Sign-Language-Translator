@@ -70,7 +70,7 @@ Here, it was decided to use a basic image classification CNN.
 
 The dataset chosen for this project contains images for the 26 letters of the ASL alphabet, for the 'space', 'delete' signs, and images with no hand sign / hands shouwn in them to represent 'nothing'. Thus there are 29 classes in total and for each class there are 3000 images. The image given below shows the ASL alphabet hand signs.
 
-![image](https://user-images.githubusercontent.com/91209506/211129744-13ccd1e5-dfdf-4ec9-9a08-57b3529c7f71.png=400x400)
+![image](https://user-images.githubusercontent.com/91209506/211129744-13ccd1e5-dfdf-4ec9-9a08-57b3529c7f71.png)
 
 A few of the main reasons why this particular dataset was chosen are,
 * The number of images available for each class - For a machine learning / deep learning model, having a large number of data will ensure a better trained model with higher accuracy. This dataset offered a lot of data.
