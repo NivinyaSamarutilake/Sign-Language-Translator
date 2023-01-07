@@ -159,6 +159,11 @@ Now this tflite model should be integrated with the android app to perform furth
 
 ### App development
 
+My choice of platform to develop the sign language recognition app was Android Studio. It was chosen as it is easier to do testing of the mobile app real time, and it has solid tensorflow lite support tools. Another advantage is that Android Studio libraries and dependencies evolve faster along with the changing requirements of the mobile app development world. Thus there are many machine learning related tools that optimized the usage of ML models in Android Studio. With the newest developments it only requires a few lines of code to embed the ML models.
+
+#### UI of the Sign Language Translator App
+
+
 
 
 
