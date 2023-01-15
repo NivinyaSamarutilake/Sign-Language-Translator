@@ -197,6 +197,10 @@ public class MainActivity extends AppCompatActivity {
                         translation.setText(txt[0]);
                         count[0] = 0;
                         start_time[0] = SystemClock.elapsedRealtime();
+
+                        for (int i=0; i<29; i++){
+                            arr[i] = 0;
+                        }
                     }
 
                     model.close();
